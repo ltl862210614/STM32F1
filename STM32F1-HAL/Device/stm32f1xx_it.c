@@ -22,6 +22,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_it.h"
+#include "stm32f1xx_hal.h"
    
 /** @addtogroup STM32F1xx_HAL_Examples
   * @{
