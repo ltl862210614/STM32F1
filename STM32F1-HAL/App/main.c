@@ -1,8 +1,5 @@
 #include "stm32f1xx_hal.h"
-
-void SystemClock_Config(void)
-{
-}
+#include "sys.h"
 
 int main(void)
 {

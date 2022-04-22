@@ -1,3 +1,11 @@
+.vscode
+
+# MDK building directory
+Bin
+Listings
+Objects
+RTE
+
 # Prerequisites
 *.d
 
