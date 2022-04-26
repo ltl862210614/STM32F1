@@ -4,8 +4,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#define UNUSED(para) (void)(para)
-
 typedef enum {
     TASK_ID_WDOG,
     TASK_ID_MISC,

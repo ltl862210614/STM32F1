@@ -17,7 +17,7 @@ int main(void)
 	
   start_task();
 
-  while (1)
+  while (0)
   {
     ;
   }

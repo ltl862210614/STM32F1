@@ -335,7 +335,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\App;..\Device;..\Drivers\CMSIS\Include;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\FreeRTOS\include;..\Hardware\sys;..\App\inc;..\FreeRTOS\potable\ARM_CM3</IncludePath>
+              <IncludePath>..\App;..\Device;..\Drivers\CMSIS\Include;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\FreeRTOS\include;..\Hardware\sys;..\App\inc;..\FreeRTOS\potable\ARM_CM3;..\Middlewares\FlexibleButton;..\Hardware\button</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -480,6 +480,11 @@
               <FileType>1</FileType>
               <FilePath>..\Hardware\sys\sys.c</FilePath>
             </File>
+            <File>
+              <FileName>button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\button\button.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -538,6 +543,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Middlewares/FlexibleButton</GroupName>
+          <Files>
+            <File>
+              <FileName>flexible_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Middlewares\FlexibleButton\flexible_button.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>testFramework</GroupName>
+          <Files>
+            <File>
+              <FileName>tw_flex_btn.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\test_framework\tw_flex_btn.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>
@@ -545,6 +570,16 @@
   </Targets>
 
   <RTE>
+    <packages>
+      <filter>
+        <targetInfos/>
+      </filter>
+      <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0">
+        <targetInfos>
+          <targetInfo name="STM32F1-HAL" versionMatchMode="fixed"/>
+        </targetInfos>
+      </package>
+    </packages>
     <apis/>
     <components>
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.0" condition="ARMv6_7_8-M Device">
