@@ -1,6 +1,7 @@
 #include "stm32f1xx_hal.h"
 #include "sys.h"
 
+#include "common.h"
 #include "task_misc.h"
 
 static void start_task(void)
@@ -15,6 +16,8 @@ int main(void)
   /* Configure the system clock to 72 MHz */
   SystemClock_Config();
 	
+  peripheral_init();
+  
   start_task();
 
   while (0)

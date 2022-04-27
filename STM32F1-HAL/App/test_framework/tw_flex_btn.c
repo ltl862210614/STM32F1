@@ -53,7 +53,7 @@ void flex_btn_init(void)
 
         if (i == BUTTON_ID_K2)
         {
-            gt_flex_button[i].pressed_logic_level = 1;
+            //gt_flex_button[i].pressed_logic_level = 1;
         }
 
         flex_button_register(&gt_flex_button[i]);

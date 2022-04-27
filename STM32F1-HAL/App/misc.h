@@ -6,10 +6,8 @@
 #define SIZE_ARR(arr) (sizeof(arr)/sizeof(arr[0]))
 #endif
 
-#if 0
 #ifndef UNUSED
-#define UNUSED(arg) (void)(arg)
-#endif
+#define UNUSED(X) (void)X
 #endif
 
 #define ENUM_TO_STR(e) (#e)

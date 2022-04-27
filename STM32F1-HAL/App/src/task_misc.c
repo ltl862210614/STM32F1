@@ -1,7 +1,7 @@
 #include "FreeRTOS.h"
 #include "task_manage.h"
 #include "misc.h"
-#include "button.h"
+#include "led.h"
 
 //#define TASK_MISC_NAME "taskMisc"
 //#define TASK_MISC_STACK ( configMINIMAL_STACK_SIZE * 2 )
@@ -33,8 +33,15 @@ extern void flex_button_event_handler(void);
 static void task_misc(void* param)
 {
 	UNUSED(param);
-    button_init();
     flex_btn_init();
+
+    for (uint8_t i=0;i<3;i++)
+    {
+        led_switch(LED_ID_1, 0);
+        vTaskDelay(500);
+        led_switch(LED_ID_1, 1);
+        vTaskDelay(500);
+    }
 
 	while (1)
 	{
