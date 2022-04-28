@@ -10,6 +10,7 @@
 | 2022/04/20 |  v1.0.0 |  naihe | 移植FreeRTOS                      |
 | 2022/04/26 |  v1.0.0 |  naihe | 添加应用button;移植flexible\_button库; |
 | 2022/04/27 |  v1.0.0 |  naihe | 添加led应用; 添加usart初始化接口;          |
+| 2022/04/28 |  v1.0.0 |  naihe | 修改RCC配置时序;                      |
 
 ***
 

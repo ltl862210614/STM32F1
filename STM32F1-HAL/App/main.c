@@ -1,3 +1,8 @@
+#include <stdio.h>
+
+#include "FreeRTOS.h"
+#include "task.h"
+
 #include "stm32f1xx_hal.h"
 #include "sys.h"
 
@@ -24,6 +29,8 @@ int main(void)
   {
     ;
   }
+
+  vTaskStartScheduler();
 
 	return 0;
 }

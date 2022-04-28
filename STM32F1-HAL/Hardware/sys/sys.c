@@ -29,13 +29,14 @@ void SystemClock_Config(void)
         }
     };
 
-    iRet = HAL_RCC_ClockConfig(&rccClkDef, FLASH_LATENCY_2);
+    /* 先配置Osc,再配置Clock,否则时钟异常系统无法正常运行 */
+    iRet = HAL_RCC_OscConfig(&rccOscDef);
     if (iRet != HAL_OK)
     {
         while (1);
     }
 
-    iRet = HAL_RCC_OscConfig(&rccOscDef);
+    iRet = HAL_RCC_ClockConfig(&rccClkDef, FLASH_LATENCY_2);
     if (iRet != HAL_OK)
     {
         while (1);
