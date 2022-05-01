@@ -32,15 +32,16 @@ extern void flex_btn_init(void);
 extern void flex_button_event_handler(void);
 static void task_misc(void* param)
 {
+    printf("%s start>>\r\n", __func__);
 	UNUSED(param);
     flex_btn_init();
 
     for (uint8_t i=0;i<3;i++)
     {
         led_switch(LED_ID_1, 0);
-        vTaskDelay(500);
+        vTaskDelay(1000);
         led_switch(LED_ID_1, 1);
-        vTaskDelay(500);
+        vTaskDelay(1000);
     }
 
 	while (1)

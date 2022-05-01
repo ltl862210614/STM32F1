@@ -1,8 +1,12 @@
+/* Standard includes. */
 #include <stdio.h>
 
+/* Scheduler includes. */
 #include "FreeRTOS.h"
 #include "task.h"
+#include "queue.h"
 
+/* Library includes. */
 #include "stm32f1xx_hal.h"
 #include "sys.h"
 
@@ -22,15 +26,17 @@ int main(void)
   SystemClock_Config();
 	
   peripheral_init();
-  
+
+  printf("build on:\r\n\t%s %s\r\n", __DATE__, __TIME__);
+
   start_task();
+
+  vTaskStartScheduler();
 
   while (0)
   {
     ;
   }
-
-  vTaskStartScheduler();
 
 	return 0;
 }
