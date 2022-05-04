@@ -17,7 +17,7 @@ int task_create(taskDef_t *task)
                         &task->task_handle);
 	if (pdPASS != iRet)
 	{
-		//log_err("create task %s failed\r\n", task->task_name);
+		printf("create task %s failed\r\n", task->task_name);
 		return -2;
 	}
 

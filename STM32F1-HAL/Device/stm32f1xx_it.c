@@ -23,6 +23,12 @@
 #include "main.h"
 #include "stm32f1xx_it.h"
 #include "stm32f1xx_hal.h"
+
+#define FREERTOS_EN 1
+#if FREERTOS_EN
+#include "FreeRTOS.h"
+#include "task.h"
+#endif
    
 /** @addtogroup STM32F1xx_HAL_Examples
   * @{
@@ -110,9 +116,11 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
+#if !FREERTOS_EN
 void SVC_Handler(void)
 {
 }
+#endif
 
 /**
   * @brief  This function handles Debug Monitor exception.
@@ -128,19 +136,32 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
+#if !FREERTOS_EN
 void PendSV_Handler(void)
 {
 }
+#endif
 
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
   * @retval None
   */
+ #if FREERTOS_EN
+ extern void xPortSysTickHandler( void );
 void SysTick_Handler(void)
 {
+  #if (INCLUDE_xTaskGetSchedulerState  == 1 )
+  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
+  {
+  #endif  /* INCLUDE_xTaskGetSchedulerState */  
+    xPortSysTickHandler();
+  #if (INCLUDE_xTaskGetSchedulerState  == 1 )
+  }
+  #endif  /* INCLUDE_xTaskGetSchedulerState */
   HAL_IncTick();
 }
+#endif
 
 /******************************************************************************/
 /*                 STM32F1xx Peripherals Interrupt Handlers                   */
