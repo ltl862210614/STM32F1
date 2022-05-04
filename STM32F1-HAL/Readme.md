@@ -4,15 +4,15 @@
 
 ## 更新记录：
 
-|    Date    | Version | Author | Note                                        |
-| :--------: | :-----: | :----: | :------------------------------------------ |
-| 2021/12/02 |  v1.0.0 |  naihe | 基于HAL库建立工程                                  |
-| 2022/04/20 |  v1.0.0 |  naihe | 移植FreeRTOS                                  |
-| 2022/04/26 |  v1.0.0 |  naihe | 添加应用button; 移植flexible\_button库;            |
-| 2022/04/27 |  v1.0.0 |  naihe | 添加led应用; 添加usart初始化接口;                      |
-| 2022/04/28 |  v1.0.0 |  naihe | 修改RCC配置时序;                                  |
-| 2022/05/01 |  v1.0.0 |  naihe | 添加usart1串口打印;                               |
-| 2022/05/04 |  v1.0.0 |  naihe | 修改FreeRTOSConfig,配置system service,RTOS运行ok; |
+|    Date    | Version | Author | Note                                                          |
+| :--------: | :-----: | :----: | :------------------------------------------------------------ |
+| 2021/12/02 |  v1.0.0 |  naihe | 基于HAL库建立工程                                                    |
+| 2022/04/20 |  v1.0.0 |  naihe | 移植FreeRTOS                                                    |
+| 2022/04/26 |  v1.0.0 |  naihe | 添加应用button; 移植flexible\_button库;                              |
+| 2022/04/27 |  v1.0.0 |  naihe | 添加led应用; 添加usart初始化接口;                                        |
+| 2022/04/28 |  v1.0.0 |  naihe | 修改RCC配置时序;                                                    |
+| 2022/05/01 |  v1.0.0 |  naihe | 添加usart1串口打印;                                                 |
+| 2022/05/04 |  v1.0.0 |  naihe | 修改FreeRTOSConfig,配置system service,RTOS运行ok; 实现串口1空闲中断接收不定长数据; |
 
 ***
 
