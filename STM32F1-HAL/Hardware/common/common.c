@@ -2,11 +2,11 @@
 
 #include "button.h"
 #include "led.h"
-#include "usart.h"
+#include "uart.h"
 
 void peripheral_init(void)
 {
     button_init();
     led_init();
-    usart1_init();
+    uart1_init();
 }

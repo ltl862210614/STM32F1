@@ -13,6 +13,7 @@
 | 2022/04/28 |  v1.0.0 |  naihe | 修改RCC配置时序;                                                    |
 | 2022/05/01 |  v1.0.0 |  naihe | 添加usart1串口打印;                                                 |
 | 2022/05/04 |  v1.0.0 |  naihe | 修改FreeRTOSConfig,配置system service,RTOS运行ok; 实现串口1空闲中断接收不定长数据; |
+| 2022/05/05 |  v1.0.0 |  naihe | usart1串口使用DMA接收; 重命名usart为uart;                               |
 
 ***
 

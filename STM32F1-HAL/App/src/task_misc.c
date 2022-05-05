@@ -38,10 +38,10 @@ static void task_misc(void* param)
 
     for (uint8_t i=0;i<3;i++)
     {
-        led_switch(LED_ID_1, 0);
-        vTaskDelay(1000);
         led_switch(LED_ID_1, 1);
-        vTaskDelay(1000);
+        vTaskDelay(500);
+        led_switch(LED_ID_1, 0);
+        vTaskDelay(500);
     }
 
 	while (1)
