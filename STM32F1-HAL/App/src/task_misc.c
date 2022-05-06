@@ -12,7 +12,7 @@ static void task_misc(void* param);
 taskDef_t gtTaskMisc = {
     .task_id = TASK_ID_MISC,
     .task_name = "taskMisc",
-    .stack_depth = 32,
+    .stack_depth = 128,
     .task_handle = NULL,
     .task_priority = 1,
     .task_func = task_misc,
@@ -47,6 +47,7 @@ static void task_misc(void* param)
 	while (1)
 	{
         flex_button_event_handler();
-		vTaskDelay(2000/portTICK_RATE_MS);
+        vTaskDelay(50);
+		//vTaskDelay(2000/portTICK_RATE_MS);
 	}
 }

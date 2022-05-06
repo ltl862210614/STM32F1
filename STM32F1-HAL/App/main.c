@@ -12,10 +12,12 @@
 
 #include "common.h"
 #include "task_misc.h"
+#include "task_uart_cli.h"
 
 static void start_task(void)
 {
 	task_misc_init();
+  task_uart_cli_init();
 }
 
 int main(void)

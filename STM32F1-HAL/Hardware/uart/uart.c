@@ -8,10 +8,10 @@
 
 #include "uart.h"
 
+#define PRINTF_UART_EN 1 
 #define PRINTF_UART USART1
 
 #if UART1_EN
-#define UART1_BUF_LEN_MAX 64
 uint8_t g_uart1_rx_buf[UART1_BUF_LEN_MAX];
 static UART_HandleTypeDef g_uart1_handle;
 
@@ -26,7 +26,7 @@ DMA_HandleTypeDef g_hdma_uart1_rx;
 
 //使UART串口可用printf函数发送
 //在uart.h文件里可更换使用printf函数的串口号	  
-#if 1
+#if PRINTF_UART_EN
 #pragma import(__use_no_semihosting)             
 //标准库需要的支持函数                 
 struct __FILE {
@@ -148,10 +148,6 @@ void uart1_init(void)
 ***********************************************************************/
 void USART1_IRQHandler(void)                	
 { 
-    // TODO: dma模式下注释这2个变量导致串口无法接收数据..
-    static uint16_t offset = 0;
-    uint8_t data = 0;
-
     //HAL_UART_IRQHandler(&g_uart1_handle); // 可省略
     #if UART1_DMA_EN
     /* 空闲中断 */
@@ -168,6 +164,9 @@ void USART1_IRQHandler(void)
         __HAL_UART_CLEAR_IDLEFLAG(&g_uart1_handle);
     }
     #else
+    static uint16_t offset = 0;
+    uint8_t data = 0;
+
     /* 接收中断 */
     if (__HAL_UART_GET_FLAG(&g_uart1_handle, UART_FLAG_RXNE) != RESET)
     {

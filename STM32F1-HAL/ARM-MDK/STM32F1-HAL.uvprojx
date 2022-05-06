@@ -335,7 +335,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\App;..\Device;..\Drivers\CMSIS\Include;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\FreeRTOS\include;..\Hardware\sys;..\App\inc;..\FreeRTOS\potable\ARM_CM3;..\Middlewares\FlexibleButton;..\Hardware\common;..\Hardware\button;..\Hardware\led;..\Hardware\uart</IncludePath>
+              <IncludePath>..\App;..\Device;..\Drivers\CMSIS\Include;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\FreeRTOS\include;..\Hardware\sys;..\App\inc;..\FreeRTOS\potable\ARM_CM3;..\Middlewares\FlexibleButton;..\Hardware\common;..\Hardware\button;..\Hardware\led;..\Hardware\uart;..\FreeRTOS-Plus-CLI</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -485,6 +485,11 @@
               <FileType>1</FileType>
               <FilePath>..\App\src\task_misc.c</FilePath>
             </File>
+            <File>
+              <FileName>task_uart_cli.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\src\task_uart_cli.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -589,6 +594,16 @@
               <FileName>tw_flex_btn.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\App\test_framework\tw_flex_btn.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FreeRTOS-Plus-CLI</GroupName>
+          <Files>
+            <File>
+              <FileName>FreeRTOS_CLI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS-Plus-CLI\FreeRTOS_CLI.c</FilePath>
             </File>
           </Files>
         </Group>

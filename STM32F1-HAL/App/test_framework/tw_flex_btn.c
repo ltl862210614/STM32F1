@@ -25,10 +25,47 @@ static void flex_button_event_callback(void *arg)
         return;
     }
 	
+    flex_button_event_t btn_evt = flex_button_event_read(&gt_flex_button[btn->id]); 
+    switch (btn->id)
+    {
+        case BUTTON_ID_K2:
+        {
+            switch (btn_evt)
+            {
+                case FLEX_BTN_PRESS_CLICK:
+                {
+                    printf("[%s:%d]btn_id=%d CLICK\r\n", __func__, __LINE__, btn->id);
+                    break;
+                }
+                case FLEX_BTN_PRESS_DOUBLE_CLICK:
+                {
+                    printf("[%s:%d]btn_id=%d double CLICK\r\n", __func__, __LINE__, btn->id);
+                    break;  
+                }  
+                default:
+                {
+                    break;
+                }
+            }
+            break;
+        }
+        case BUTTON_ID_K3:
+        {
+            break;
+        }
+        default:
+        {
+            printf("[%s:%d]btn_id=%d error\r\n", __func__, __LINE__, btn->id);
+            break;
+        }
+    }
+
+    #if 0
     if ((flex_button_event_read(&gt_flex_button[btn->id]) == FLEX_BTN_PRESS_CLICK))
     {
-        //printf("[combination]: button 0\n");
+        printf("[%s:%d]btn_id=%d CLICK\r\n", __func__, __LINE__, btn->id);
     }
+    #endif
 }
 
 void flex_button_event_handler(void)

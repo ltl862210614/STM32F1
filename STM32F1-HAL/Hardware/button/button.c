@@ -8,8 +8,8 @@
 
 static button_def_t gt_btn_def[BUTTON_ID_MAX] = 
 {
-    {BUTTON_ID_K2, GPIOA, {GPIO_PIN_0, GPIO_MODE_INPUT, GPIO_NOPULL, GPIO_SPEED_FREQ_HIGH}},
-    {BUTTON_ID_K3, GPIOA, {GPIO_PIN_1, GPIO_MODE_INPUT, GPIO_NOPULL, GPIO_SPEED_FREQ_HIGH}},
+    {BUTTON_ID_K2, GPIOA, {GPIO_PIN_0, GPIO_MODE_INPUT, GPIO_PULLUP, GPIO_SPEED_FREQ_HIGH}},
+    {BUTTON_ID_K3, GPIOA, {GPIO_PIN_1, GPIO_MODE_INPUT, GPIO_PULLUP, GPIO_SPEED_FREQ_HIGH}},
 };
 
 button_def_t *get_btn_def(uint8_t btn_id)
@@ -49,7 +49,6 @@ void button_init(void)
     
     uint8_t size = SIZE_ARR(gt_btn_def);
 
-    #if 1
     for (i=0; i<size; i++)
     {
         button_def_t *pt_gpio = get_btn_def(i);
@@ -58,13 +57,6 @@ void button_init(void)
             HAL_GPIO_Init(pt_gpio->gpio, &pt_gpio->init);
         }
     }
-    #else
-    button_def_t *pt_gpio = get_btn_def(BUTTON_ID_K2);
-    if (pt_gpio != NULL)
-    {
-        HAL_GPIO_Init(pt_gpio->gpio, &pt_gpio->init);
-    }
-    #endif
 }
 
 uint8_t read_button_pin(uint8_t btn_id)
