@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx_hal_gpio.h"
@@ -8,21 +9,73 @@
 
 #include "uart.h"
 
-#define PRINTF_UART_EN 1 
 #define PRINTF_UART USART1
+#define PRINTF_HANDLE g_uart1_handle
 
 #if UART1_EN
-uint8_t g_uart1_rx_buf[UART1_BUF_LEN_MAX];
+volatile uint8_t g_uart1_rx_buf[UART1_BUF_LEN_MAX];
 static UART_HandleTypeDef g_uart1_handle;
 
 uint16_t g_uart1_rx_len = 0;
-uint8_t g_uart1_rx_flag = 0;    //接收完成标志
+volatile uint8_t g_uart1_rx_flag = 0;    //接收完成标志
 
 #if UART1_DMA_EN
-DMA_HandleTypeDef g_hdma_uart1_tx;
-DMA_HandleTypeDef g_hdma_uart1_rx;
+static DMA_HandleTypeDef g_hdma_uart1_tx;
+static DMA_HandleTypeDef g_hdma_uart1_rx;
 #endif
+
 #endif
+
+int is_in_isr (void) //若在中断中__get_IPSR()返回1，否则返回0
+{
+   return __get_IPSR();  
+}
+
+#define PRINTF_LOCK_EN 0
+static char printf_buf[128] = {0};
+int uart_print(char *format, ...)
+{
+    int ret;
+    //char printf_buf[128] = {0};
+ 
+    #if PRINTF_LOCK_EN
+    if(is_in_isr() != 0)
+	{
+        taskDISABLE_INTERRUPTS();//若在中断中调用则关闭中断，防止中断嵌套造成线程不安全
+	}
+    else
+    {
+        #if 0
+		taskENTER_CRITICAL();    //若不在中断中则进入临界区关闭中断且禁止任务调度,消耗资源
+        #else
+        while(HAL_UART_GetState(&PRINTF_HANDLE) == HAL_UART_STATE_BUSY_TX)//若串口忙则挂起此任务
+		taskYIELD();
+        #endif
+	}
+    #endif
+
+	va_list ap;
+	va_start(ap, format);
+	vsprintf(printf_buf, format, ap);
+
+	ret = HAL_UART_Transmit(&PRINTF_HANDLE, (uint8_t *)printf_buf, strlen(printf_buf), 0xffff);
+	va_end(ap);
+
+    #if PRINTF_LOCK_EN
+	if(is_in_isr() != 0)
+	{
+		taskENABLE_INTERRUPTS();//打开中断
+	}
+    #if 0
+    else
+    {
+		taskEXIT_CRITICAL();//退出临界区
+	}
+    #endif
+    #endif
+
+    return ret;
+}
 
 //使UART串口可用printf函数发送
 //在uart.h文件里可更换使用printf函数的串口号	  
@@ -39,14 +92,15 @@ void _sys_exit(int x){
 } 
 //重定义fputc函数 
 int fputc(int ch, FILE *f)
-{    
-    #if 0
+{  
+    #if 1
 	while((PRINTF_UART->SR&0X40)==0);//循环发送,直到发送完毕   
     PRINTF_UART->DR = (uint8_t) ch;  
     #else 
     while(__HAL_UART_GET_FLAG(&g_uart1_handle, UART_FLAG_TC) == HAL_OK);
     HAL_UART_Transmit(&g_uart1_handle, (uint8_t *)&ch, 1, 0xffff); 
     #endif
+
 	return ch;
 }
 
@@ -66,7 +120,7 @@ int fgetc(FILE * f)
 #endif
 
 #if UART1_EN
-void uart1_init(void)
+static void uart1_init(void)
 {
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_AFIO_CLK_ENABLE();
@@ -100,7 +154,7 @@ void uart1_init(void)
     //HAL_UART_Receive_IT(&g_uart1_handle, g_uart1_rx_buf, UART1_BUF_LEN_MAX);
 
     HAL_NVIC_EnableIRQ(USART1_IRQn);    //使能USART1中断通道
-    HAL_NVIC_SetPriority(USART1_IRQn,3,3);  //抢占优先级3，子优先级3
+    HAL_NVIC_SetPriority(USART1_IRQn,3,0);  //抢占优先级3，子优先级3
 
     __HAL_UART_ENABLE_IT(&g_uart1_handle,UART_IT_RXNE);//接收中断
 	__HAL_UART_ENABLE_IT(&g_uart1_handle,UART_IT_IDLE);//空闲中断
@@ -154,12 +208,13 @@ void USART1_IRQHandler(void)
     if (__HAL_UART_GET_FLAG(&g_uart1_handle, UART_FLAG_IDLE) != RESET)
     {
         HAL_UART_DMAStop(&g_uart1_handle);
-        uint8_t data_length  = UART1_BUF_LEN_MAX - __HAL_DMA_GET_COUNTER(&g_hdma_uart1_rx);
-        printf("[%s:%d]buf:%s,%d\n", __func__, __LINE__, g_uart1_rx_buf, data_length);
-        //HAL_UART_Transmit(&g_uart1_handle, g_uart1_rx_buf, data_length, 0xffff);
+        g_uart1_rx_len  = UART1_BUF_LEN_MAX - __HAL_DMA_GET_COUNTER(&g_hdma_uart1_rx);
+        //printf("[%s:%d]buf:%s,%d\n", __func__, __LINE__, g_uart1_rx_buf, g_uart1_rx_len);
+        //HAL_UART_Transmit(&g_uart1_handle, g_uart1_rx_buf, g_uart1_rx_len, 0xffff);
+        
+        g_uart1_rx_flag = 1;
 
-        memset(g_uart1_rx_buf,0x00,data_length);
-        data_length = 0;
+        //memset(g_uart1_rx_buf,0x00,g_uart1_rx_len);
         HAL_UART_Receive_DMA(&g_uart1_handle, (uint8_t*)g_uart1_rx_buf, UART1_BUF_LEN_MAX);
         __HAL_UART_CLEAR_IDLEFLAG(&g_uart1_handle);
     }
@@ -200,10 +255,7 @@ void USART1_IRQHandler(void)
 
 uint16_t get_uart1_rx_buf(uint8_t buf[])
 {
-    if (g_uart1_rx_len)
-    {
-        memcpy(buf, g_uart1_rx_buf, g_uart1_rx_len);
-    }
+    memcpy(buf, (void *)g_uart1_rx_buf, g_uart1_rx_len);
 
     return g_uart1_rx_len;
 }
@@ -220,4 +272,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	if(huart->Instance==USART1)//如果是串口1
 	{
     }
+}
+
+void uart_init(void)
+{
+    #if UART1_EN
+    uart1_init();
+    #endif
 }

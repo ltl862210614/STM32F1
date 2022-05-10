@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 
+#include "misc.h"
+#include "log.h"
+
 void peripheral_init(void);
 
 #endif

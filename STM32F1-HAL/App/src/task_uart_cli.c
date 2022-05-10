@@ -36,26 +36,34 @@ void task_uart_cli_deInit(void)
 static void task_uart_cli(void* param)
 {
     int ret = 0;
-    uint8_t out_buf[64];
-    printf("%s start>>\r\n", __func__);
+    uint8_t out_buf[32];
+    uint8_t in_buf[UART1_BUF_LEN_MAX];
+    log_dbg("%s start>>\r\n", __func__);
 	UNUSED(param);
 
     while (1)
     {
         if (g_uart1_rx_flag)
         {
+            memset(in_buf, 0, SIZE_ARR(in_buf));
+            if (get_uart1_rx_buf(in_buf) == 0)
+            {
+                break;
+            }
             do{
-                ret = FreeRTOS_CLIProcessCommand((char *)g_uart1_rx_buf, (char *)out_buf, SIZE_ARR(out_buf));
-                g_uart1_rx_flag = 0;
+                log_dbg("[%s:%d]\r\n", __func__, __LINE__);
+                ret = FreeRTOS_CLIProcessCommand((char *)in_buf, (char *)out_buf, SIZE_ARR(out_buf));
                 if (ret == pdFALSE)
                 {
-                    printf("%s\r\n", out_buf);
+                    log_dbg("%s\r\n", out_buf);
                     memset(out_buf, 0, SIZE_ARR(out_buf));
                 }
+
+                g_uart1_rx_flag = 0;
             }while(ret);
         }
-        printf("[%s:%d]\r\n", __func__, __LINE__);
-        vTaskDelay(2000);
+        //log_dbg("[%s:%d]\r\n", __func__, __LINE__);
+        //vTaskDelay(2000);
     }
     
 }

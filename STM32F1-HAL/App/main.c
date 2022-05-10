@@ -29,7 +29,7 @@ int main(void)
 	
   peripheral_init();
 
-  printf("build on:\r\n\t%s %s\r\n", __DATE__, __TIME__);
+  log_info("build on:\r\n\t%s %s\r\n", __DATE__, __TIME__);
 
   start_task();
 

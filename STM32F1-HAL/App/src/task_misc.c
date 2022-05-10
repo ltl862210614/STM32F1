@@ -2,6 +2,7 @@
 #include "task_manage.h"
 #include "misc.h"
 #include "led.h"
+#include "uart.h"
 
 //#define TASK_MISC_NAME "taskMisc"
 //#define TASK_MISC_STACK ( configMINIMAL_STACK_SIZE * 2 )
@@ -32,7 +33,7 @@ extern void flex_btn_init(void);
 extern void flex_button_event_handler(void);
 static void task_misc(void* param)
 {
-    printf("%s start>>\r\n", __func__);
+    log_info("%s start>>\r\n", __func__);
 	UNUSED(param);
     flex_btn_init();
 

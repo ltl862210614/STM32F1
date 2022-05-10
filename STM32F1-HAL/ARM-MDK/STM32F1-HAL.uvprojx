@@ -335,7 +335,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\App;..\Device;..\Drivers\CMSIS\Include;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\FreeRTOS\include;..\Hardware\sys;..\App\inc;..\FreeRTOS\potable\ARM_CM3;..\Middlewares\FlexibleButton;..\Hardware\common;..\Hardware\button;..\Hardware\led;..\Hardware\uart;..\FreeRTOS-Plus-CLI</IncludePath>
+              <IncludePath>..\App;..\Device;..\Drivers\CMSIS\Include;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\FreeRTOS\include;..\Hardware\sys;..\App\inc;..\FreeRTOS\potable\ARM_CM3;..\Middlewares\FlexibleButton;..\Hardware\common;..\Hardware\button;..\Hardware\led;..\Hardware\uart;..\FreeRTOS-Plus-CLI;..\Hardware\log</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -519,6 +519,11 @@
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\uart\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\log\log.c</FilePath>
             </File>
           </Files>
         </Group>

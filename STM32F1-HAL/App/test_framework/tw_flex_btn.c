@@ -3,6 +3,7 @@
 
 #include "flexible_button.h"
 #include "button.h"
+#include "log.h"
 
 static flex_button_t gt_flex_button[BUTTON_ID_MAX];
 
@@ -34,12 +35,12 @@ static void flex_button_event_callback(void *arg)
             {
                 case FLEX_BTN_PRESS_CLICK:
                 {
-                    printf("[%s:%d]btn_id=%d CLICK\r\n", __func__, __LINE__, btn->id);
+                    log_dbg("[%s:%d]btn_id=%d CLICK\r\n", __func__, __LINE__, btn->id);
                     break;
                 }
                 case FLEX_BTN_PRESS_DOUBLE_CLICK:
                 {
-                    printf("[%s:%d]btn_id=%d double CLICK\r\n", __func__, __LINE__, btn->id);
+                    log_dbg("[%s:%d]btn_id=%d double CLICK\r\n", __func__, __LINE__, btn->id);
                     break;  
                 }  
                 default:
@@ -55,7 +56,7 @@ static void flex_button_event_callback(void *arg)
         }
         default:
         {
-            printf("[%s:%d]btn_id=%d error\r\n", __func__, __LINE__, btn->id);
+            log_err("[%s:%d]btn_id=%d error\r\n", __func__, __LINE__, btn->id);
             break;
         }
     }
@@ -63,7 +64,7 @@ static void flex_button_event_callback(void *arg)
     #if 0
     if ((flex_button_event_read(&gt_flex_button[btn->id]) == FLEX_BTN_PRESS_CLICK))
     {
-        printf("[%s:%d]btn_id=%d CLICK\r\n", __func__, __LINE__, btn->id);
+        log_dbg("[%s:%d]btn_id=%d CLICK\r\n", __func__, __LINE__, btn->id);
     }
     #endif
 }

@@ -3,6 +3,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "log.h"
 
 typedef enum {
     TASK_ID_UART_CLI,
