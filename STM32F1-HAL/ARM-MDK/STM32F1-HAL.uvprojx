@@ -15,7 +15,7 @@
         <TargetCommonOption>
           <Device>STM32F103CB</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.4.0</PackID>
+          <PackID>Keil.STM32F1xx_DFP.2.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00005000) IROM(0x08000000,0x00020000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -186,7 +186,7 @@
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -335,7 +335,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\App;..\Device;..\Drivers\CMSIS\Include;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\FreeRTOS\include;..\Hardware\sys;..\App\inc;..\FreeRTOS\potable\ARM_CM3;..\Middlewares\FlexibleButton;..\Hardware\common;..\Hardware\button;..\Hardware\led;..\Hardware\uart;..\FreeRTOS-Plus-CLI;..\Hardware\log</IncludePath>
+              <IncludePath>..\App;..\Device;..\Drivers\CMSIS\Include;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\FreeRTOS\include;..\Hardware\sys;..\App\inc;..\FreeRTOS\potable\ARM_CM3;..\Middlewares\FlexibleButton;..\Hardware\common;..\Hardware\button;..\Hardware\led;..\Hardware\uart;..\FreeRTOS-Plus-CLI;..\Hardware\log;..\Hardware\flash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -525,6 +525,11 @@
               <FileType>1</FileType>
               <FilePath>..\Hardware\log\log.c</FilePath>
             </File>
+            <File>
+              <FileName>flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\flash\flash.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -600,6 +605,21 @@
               <FileType>1</FileType>
               <FilePath>..\App\test_framework\tw_flex_btn.c</FilePath>
             </File>
+            <File>
+              <FileName>cli_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\test_framework\cli_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>cli_framework.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\test_framework\cli_framework.c</FilePath>
+            </File>
+            <File>
+              <FileName>cli_misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\test_framework\cli_misc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -609,6 +629,11 @@
               <FileName>FreeRTOS_CLI.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FreeRTOS-Plus-CLI\FreeRTOS_CLI.c</FilePath>
+            </File>
+            <File>
+              <FileName>cli_menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS-Plus-CLI\cli_menu.c</FilePath>
             </File>
           </Files>
         </Group>

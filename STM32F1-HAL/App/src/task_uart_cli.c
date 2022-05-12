@@ -23,8 +23,10 @@ taskDef_t gtTaskUartCli = {
     .task_func = task_uart_cli,
 };
 
+extern void tc_register_cli_commands(void);
 void task_uart_cli_init(void)
 {
+    tc_register_cli_commands();
     task_create(&gtTaskUartCli);
 }
 

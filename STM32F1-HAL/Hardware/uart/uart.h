@@ -6,7 +6,7 @@
 
 #include "app_conf.h"
 
-#define PRINTF_UART_EN 0
+#define PRINTF_UART_EN 1
 
 #if UART1_EN
 #define UART1_BUF_LEN_MAX 64
